@@ -15,6 +15,9 @@
 ### 1. Clone/Download the Repository
 
 ### 2. Install Dependencies:
+
+> 💡 pro-tip: in order to run the same version of `Node.js` as used in https://youtu.be/z7Vz8ZKylc4, please run "`nvm use || nvm install`" before running "`npm install`".
+
 `$ npm install`
 
 ### 3. Run tests
