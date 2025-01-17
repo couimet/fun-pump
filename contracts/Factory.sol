@@ -20,6 +20,8 @@ contract Factory {
         bool isOpen;
     }
 
+    event Created(address indexed token);
+
     constructor (uint256 _fee) {
         fee = _fee;
         owner = msg.sender;
@@ -57,5 +59,6 @@ contract Factory {
         tokenToSale[address(token)] = sale;
 
         // Tell people it's live
+        emit Created(address(token));
     }
 }
