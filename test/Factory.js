@@ -46,5 +46,13 @@ describe("Factory", function () {
             const { token, creator } = await loadFixture(deployFactoryFixture)
             expect(await token.creator()).to.equal(creator.address)
         })
+
+        it("Should set the supply", async function () {
+            const { factory, token } = await loadFixture(deployFactoryFixture)
+
+            const totalSupply = ethers.parseUnits("1000000", 18)
+
+            expect(await token.balanceOf((await factory.getAddress()))).to.equal(totalSupply)
+        })
     })
 })
