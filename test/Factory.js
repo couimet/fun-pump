@@ -54,5 +54,13 @@ describe("Factory", function () {
 
             expect(await token.balanceOf((await factory.getAddress()))).to.equal(totalSupply)
         })
+
+        it("Should set ETH balance", async function () {
+            const { factory } = await loadFixture(deployFactoryFixture)
+
+            const balance = await ethers.provider.getBalance(await factory.getAddress())
+
+            expect(balance).to.equal(FEE)
+        })
     })
 })
