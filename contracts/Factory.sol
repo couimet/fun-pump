@@ -61,4 +61,10 @@ contract Factory {
         // Tell people it's live
         emit Created(address(token));
     }
+
+    function buy(address _token, uint256 _amount) external payable {
+
+        Token(_token).transfer(msg.sender, _amount);
+
+    }
 }
