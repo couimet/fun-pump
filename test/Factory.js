@@ -41,5 +41,10 @@ describe("Factory", function () {
             const { factory, token } = await loadFixture(deployFactoryFixture)
             expect(await token.owner()).to.equal(await factory.getAddress())
         })
+
+        it("Should set the creator", async function () {
+            const { token, creator } = await loadFixture(deployFactoryFixture)
+            expect(await token.creator()).to.equal(creator.address)
+        })
     })
 })
