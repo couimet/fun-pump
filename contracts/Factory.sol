@@ -2,6 +2,9 @@
 pragma solidity 0.8.27;
 
 contract Factory {
-    string public name = "Factory";
-    string public name2 = "Factory2";
+    uint256 public immutable fee;
+
+    constructor (uint256 _fee) {
+        fee = _fee;
+    }
 }

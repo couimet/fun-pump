@@ -3,29 +3,21 @@ const { expect } = require("chai")
 const { ethers } = require("hardhat")
 
 describe("Factory", function () {
+    const FEE = ethers.parseUnits("0.01", 18)
 
     async function deployFactoryFixture() {
         // Fetch the contract
         const Factory = await ethers.getContractFactory("Factory")
         // Deploy the contract
-        const factory = await Factory.deploy()
+        const factory = await Factory.deploy(FEE)
 
         return { factory }
     }
 
-    it("should have a name", async function() {
-        const { factory } = await deployFactoryFixture()
-        // Check name
-        const name = await factory.name()
-        // Check name is correct
-        expect(name).to.equal("Factory")
-    })
-
-    it("should have another name", async function() {
-        const { factory } = await deployFactoryFixture()
-        // Check name
-        const name = await factory.name2()
-        // Check name is correct
-        expect(name).to.equal("Factory2")
+    describe("Deployment", function () {
+        it("Should set the fee", async function () {
+            const { factory } = await loadFixture(deployFactoryFixture)
+            expect(await factory.fee()).to.equal(FEE)
+        })
     })
 })
