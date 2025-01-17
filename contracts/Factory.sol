@@ -33,6 +33,9 @@ contract Factory {
         string memory _name,
         string memory _symbol
     ) external payable {
+        // Make sure that the fee is correct
+        require(msg.value >= fee, "Factory: Creator fee not met");
+
         // Create a new token
         Token token = new Token(msg.sender, _name, _symbol, 1_000_000 ether);
 
