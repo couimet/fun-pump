@@ -15,6 +15,18 @@ import config from "./config.json"
 import images from "./images.json"
 
 export default function Home() {
+  const [provider, setProvider] = useState(null)
+
+  async function loadBlockchainData() {
+    const provider = new ethers.BrowserProvider(window.ethereum)
+    setProvider(provider)
+
+    console.log("provider", provider)
+  }
+
+  useEffect(() => {
+    loadBlockchainData()
+  }, [])
 
   return (
     <div className="page">
