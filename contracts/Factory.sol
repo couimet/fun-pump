@@ -21,6 +21,7 @@ contract Factory {
     }
 
     event Created(address indexed token);
+    event Buy(address indexed token, uint256 amount);
 
     constructor (uint256 _fee) {
         fee = _fee;
@@ -66,5 +67,7 @@ contract Factory {
 
         Token(_token).transfer(msg.sender, _amount);
 
+        // Emit an event
+        emit Buy(_token, _amount);
     }
 }
