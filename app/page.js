@@ -48,8 +48,14 @@ export default function Home() {
 
       <main>
         <div className="create">
-          <button onClick={toggleCreate} className="btn--fancy">
-            {"[ start a new token ]"}
+          <button onClick={factory && account && toggleCreate} className="btn--fancy">
+          {!factory ? (
+              "[ contract not deployed ]"
+            ) : !account ? (
+              "[ please connect ]"
+            ) : (
+              "[ start a new token ]"
+            )}
           </button>
         </div>
       </main>
