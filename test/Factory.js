@@ -113,5 +113,13 @@ describe("Factory", function () {
 
             expect(balance).to.equal(AMOUNT)
         })
+
+        it("Should update token sale", async function () {
+            const { factory, token } = await loadFixture(buyTokenFixture)
+
+            const sale = await factory.tokenToSale(await token.getAddress())
+
+            expect(sale.sold).to.equal(AMOUNT)
+        })
     })
 })
