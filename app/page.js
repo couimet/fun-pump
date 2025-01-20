@@ -16,12 +16,11 @@ import images from "./images.json"
 
 export default function Home() {
   const [provider, setProvider] = useState(null)
+  const [account, setAccount] = useState(null)
 
   async function loadBlockchainData() {
     const provider = new ethers.BrowserProvider(window.ethereum)
     setProvider(provider)
-
-    console.log("provider", provider)
   }
 
   useEffect(() => {
@@ -30,7 +29,7 @@ export default function Home() {
 
   return (
     <div className="page">
-      <Header account={"0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"} setAccount={""}></Header>
+      <Header account={account} setAccount={setAccount}></Header>
     </div>
   );
 }
