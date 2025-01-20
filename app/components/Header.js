@@ -4,7 +4,7 @@ function Header({ account, setAccount }) {
 
   return (
     <header>
-
+        <p>Hello, world!</p>
     </header>
   );
 }
