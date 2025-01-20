@@ -19,6 +19,11 @@ export default function Home() {
   const [account, setAccount] = useState(null)
   const [factory, setFactory] = useState(null)
   const [fee, setFee] = useState(0)
+  const [showCreate, setShowCreate] = useState(false)
+
+  function toggleCreate() {
+    showCreate ? setShowCreate(false) : setShowCreate(true)
+  }
 
   async function loadBlockchainData() {
     const provider = new ethers.BrowserProvider(window.ethereum)
@@ -40,6 +45,18 @@ export default function Home() {
   return (
     <div className="page">
       <Header account={account} setAccount={setAccount}></Header>
+
+      <main>
+        <div className="create">
+          <button onClick={toggleCreate} className="btn--fancy">
+            {"[ start a new token ]"}
+          </button>
+        </div>
+      </main>
+
+      {showCreate && (
+        <List toggleCreate={toggleCreate} fee={fee} provider={provider} factory={factory} />
+      )}
     </div>
   );
 }
