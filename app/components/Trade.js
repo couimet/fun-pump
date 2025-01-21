@@ -6,6 +6,24 @@ function Trade({ toggleTrade, token, provider, factory }) {
   const [limit, setLimit] = useState(0)
   const [cost, setCost] = useState(0)
 
+  async function buyHandler(form) {
+    const amount = form.get("amount")
+
+    const cost = await factory.getCost(token.sold)
+    const totalCost = cost * BigInt(amount)
+
+    const signer = await provider.getSigner()
+
+    const transaction = factory.connect(signer).buy(
+        token.token,
+        ethers.parseUnits(amount, 18),
+        { value: totalCost })
+
+    await transaction.wait
+
+    toggleTrade()
+  }
+
   async function getSaleDetails() {
     const target = await factory.TARGET()
     setTarget(target)
@@ -36,7 +54,7 @@ function Trade({ toggleTrade, token, provider, factory }) {
       {token.sold >= limit || token.raised >= target ? (
         <p className="disclaimer">target reached!</p>
       ) : (
-        <form>
+        <form action={buyHandler}>
           <input type="number" name="amount" min={1} max={10000} placeholder="1" />
           <input type="submit" value="[ buy ]" />
         </form>
