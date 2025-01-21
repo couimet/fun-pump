@@ -2,6 +2,24 @@ import { useEffect, useState } from "react"
 import { ethers } from "ethers"
 
 function Trade({ toggleTrade, token, provider, factory }) {
+  const [target, setTarget] = useState(0)
+  const [limit, setLimit] = useState(0)
+  const [cost, setCost] = useState(0)
+
+  async function getSaleDetails() {
+    const target = await factory.TARGET()
+    setTarget(target)
+
+    const limit = await factory.TOKEN_LIMIT()
+    setLimit(limit)
+
+    const cost = await factory.getCost(token.sold)
+    setCost(cost)
+  }
+
+  useEffect(() => {
+    getSaleDetails()
+  }, [])
 
   return (
     <div className="trade">
@@ -12,7 +30,17 @@ function Trade({ toggleTrade, token, provider, factory }) {
         <p>creator: {token.creator.slice(0, 6) + '...' + token.creator.slice(38, 42)}</p>
         <img src={token.image} alt="token image" width={256} height={256} />
         <p>marketcap: {ethers.formatUnits(token.raised, 18)} eth</p>
+        <p>base cost: {ethers.formatUnits(cost, 18)} eth</p>
       </div>
+
+      {token.sold >= limit || token.raised >= target ? (
+        <p className="disclaimer">target reached!</p>
+      ) : (
+        <form>
+          <input type="number" name="amount" min={1} max={10000} placeholder="1" />
+          <input type="submit" value="[ buy ]" />
+        </form>
+      )}
 
       <button onClick={toggleTrade} className="btn--fancy">[ cancel ]</button>
     </div >
